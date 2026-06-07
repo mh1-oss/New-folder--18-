@@ -1,4 +1,9 @@
-import { Pool } from '@neondatabase/serverless';
+import { Pool, neonConfig } from '@neondatabase/serverless';
+
+// تفعيل اتصالات WebSocket المتوافقة مع بيئة Cloudflare Edge/Workers
+if (typeof WebSocket !== 'undefined') {
+  neonConfig.webSocketConstructor = WebSocket;
+}
 
 // 1. تحديد إن كان هناك اتصال بقاعدة بيانات Neon
 const hasDbUrl = !!process.env.DATABASE_URL;
