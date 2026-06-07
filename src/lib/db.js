@@ -1,9 +1,4 @@
-import { Pool, neonConfig } from '@neondatabase/serverless';
-
-// تفعيل اتصالات WebSocket المتوافقة مع بيئة Cloudflare Edge/Workers
-if (typeof WebSocket !== 'undefined') {
-  neonConfig.webSocketConstructor = WebSocket;
-}
+import { neon } from '@neondatabase/serverless';
 
 // 1. تحديد إن كان هناك اتصال بقاعدة بيانات Neon
 const hasDbUrl = !!process.env.DATABASE_URL;
@@ -11,20 +6,15 @@ let dbPool = null;
 
 if (hasDbUrl) {
   try {
-    dbPool = new Pool({
-      connectionString: process.env.DATABASE_URL,
-      // Neon Edge compatibility
-      ssl: {
-        rejectUnauthorized: false
+    const sql = neon(process.env.DATABASE_URL);
+    // مغلف متوافق (Compatibility Wrapper) لتجنب تغيير استعلامات الكود الأخرى
+    dbPool = {
+      query: async (text, params) => {
+        const rows = await sql(text, params);
+        return { rows };
       }
-    });
-    
-    // تسجيل مستمع للأخطاء المفاجئة لمنع انهيار الخادم (Uncaught Exception crash prevention)
-    dbPool.on('error', (err) => {
-      console.error('Unexpected error on idle Neon Database connection client:', err.message || err);
-    });
-
-    console.log("Neon Database connection pool successfully initialized.");
+    };
+    console.log("Neon Database HTTP connection successfully initialized.");
   } catch (error) {
     console.error("Neon DB Init Error:", error);
   }
