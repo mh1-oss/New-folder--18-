@@ -190,7 +190,7 @@ export async function initDatabase() {
     // إدخال مستخدم المسؤول الافتراضي إذا لم يكن موجوداً (مع كلمة مرور مشفرة بـ SHA-256)
     await dbPool.query(`
       INSERT INTO admins (username, password) 
-      VALUES ('admin', '240be518fabd2724ddb6f04eeb1da1415b43b32c3b22ab1a0847beba18451897') 
+      VALUES ('admin', '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9') 
       ON CONFLICT (username) DO NOTHING;
     `);
 
@@ -588,14 +588,14 @@ export async function hashPassword(password) {
 export async function validateAdmin(username, password) {
   const hashedPassword = await hashPassword(password);
   if (isMockMode) {
-    return username === 'admin' && hashedPassword === '240be518fabd2724ddb6f04eeb1da1415b43b32c3b22ab1a0847beba18451897';
+    return username === 'admin' && hashedPassword === '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9';
   }
   try {
     const res = await dbPool.query("SELECT * FROM admins WHERE username = $1 AND password = $2", [username, hashedPassword]);
     return res.rows.length > 0;
   } catch (err) {
     console.error("validateAdmin Database Error:", err);
-    return username === 'admin' && hashedPassword === '240be518fabd2724ddb6f04eeb1da1415b43b32c3b22ab1a0847beba18451897'; // Fallback in case of neon serverless edge pooling delay
+    return username === 'admin' && hashedPassword === '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9'; // Fallback in case of neon serverless edge pooling delay
   }
 }
 
