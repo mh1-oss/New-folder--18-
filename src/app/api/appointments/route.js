@@ -8,7 +8,7 @@ import {
   getQueuePosition 
 } from '../../../lib/db';
 
-export const runtime = 'edge';
+
 
 // GET: الاستعلام عن حجز بكود، أو برقم هاتف، أو جلب مواعيد حلاق في تاريخ معين
 export async function GET(request) {

@@ -5,7 +5,7 @@ import {
   verifyAdminSession
 } from '../../../lib/db';
 
-export const runtime = 'edge';
+
 
 // GET: جلب مواعيد حلاق معين في تاريخ محدد (أو اليوم) لعرضها في لوحة التحكم الخاصة به
 export async function GET(request) {

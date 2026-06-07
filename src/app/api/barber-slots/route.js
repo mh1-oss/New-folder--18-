@@ -7,7 +7,7 @@ import {
   verifyAdminSession
 } from '../../../lib/db';
 
-export const runtime = 'edge';
+
 
 // GET: جلب الفترات الزمنية
 export async function GET(request) {

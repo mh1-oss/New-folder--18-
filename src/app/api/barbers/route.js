@@ -1,6 +1,6 @@
 import { getBarbers, updateBarberRestDays, updateBarberCustomSlots, verifyAdminSession } from '../../../lib/db';
 
-export const runtime = 'edge';
+
 
 // GET: جلب قائمة الحلاقين مع معلوماتهم
 export async function GET(request) {

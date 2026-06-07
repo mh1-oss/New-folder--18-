@@ -10,7 +10,7 @@ if (hasDbUrl) {
     // مغلف متوافق (Compatibility Wrapper) لتجنب تغيير استعلامات الكود الأخرى
     dbPool = {
       query: async (text, params) => {
-        const rows = await sql(text, params);
+        const rows = await sql.query(text, params);
         return { rows };
       }
     };

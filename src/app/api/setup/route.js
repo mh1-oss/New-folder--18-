@@ -1,6 +1,6 @@
 import { initDatabase } from '../../../lib/db';
 
-export const runtime = 'edge';
+
 
 export async function GET(request) {
   try {
